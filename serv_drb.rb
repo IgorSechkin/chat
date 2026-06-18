@@ -17,7 +17,7 @@ require 'rack/multipart'
 # require "net/http"
 require 'open-uri'
 # require 'pry'
-require "httparty"
+# require "httparty"
 
 
 require 'rss'
