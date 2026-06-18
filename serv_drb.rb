@@ -123,7 +123,7 @@ class MyService < Tag
     # удаляем куки
     @cook = "<link rel=\"stylesheet\" href=\"/email=#{@cookie["/email"]};max-age=0;\">""<link rel=\"stylesheet\" href=\"/password=#{@cookie[" /password"]};max-age=0;\">"
     @users_on.delete @cookie["/email"]
-    return ERB.new(IO.read('./public/rss.html.erb')).result(binding)
+    return ERB.new(IO.read('./public/index.html.erb')).result(binding)
   end
 # =============================chat=======================================
   def chat
