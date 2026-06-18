@@ -13,10 +13,10 @@ require 'rack/multipart'
 
 
 # скачать страницу
-require 'nokogiri'
-require "net/http"
+# require 'nokogiri'
+# require "net/http"
 require 'open-uri'
-require 'pry'
+# require 'pry'
 require "httparty"
 
 
