@@ -6,11 +6,13 @@ GEM
       nio4r (~> 2.0)
     rack (3.2.4)
     sqlite3 (2.8.1-x86_64-linux-gnu)
+    drb (2.2.3)
 
 PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
+  drb
   puma
   rack
   sqlite3
