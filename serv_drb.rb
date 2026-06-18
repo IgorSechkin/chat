@@ -8,7 +8,7 @@ require 'digest'
 require 'fileutils'
 require 'rack/multipart'
 # require 'rack'
-require 'action_view'
+# require 'action_view'
 # require 'action_view/helpers'
 
 
