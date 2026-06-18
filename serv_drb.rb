@@ -7,22 +7,8 @@ require 'cgi'
 require 'digest'
 require 'fileutils'
 require 'rack/multipart'
-# require 'rack'
-# require 'action_view'
-# require 'action_view/helpers'
 
-
-# скачать страницу
-# require 'nokogiri'
-# require "net/http"
 require 'open-uri'
-# require 'pry'
-# require "httparty"
-
-
-require 'rss'
-
-
 
 class Tag
     
@@ -162,20 +148,6 @@ class MyService < Tag
   end
   
 # =============================rss=======================================
-  def rss_link
-    return ERB.new(IO.read('./public/rss.html.erb')).result(binding)
-  end
-
-  def rss
-    @feed = nil
-    if params["item"] =~/\w+\.(?:xml|rss)/
-      @feed = RSS::Parser.parse("#{params["item"]}")
-    else
-      @page = HTTParty.get("#{params["item"]}").force_encoding("UTF-8")
-    end
-
-    return ERB.new(IO.read('./public/rss_content.html.erb')).result(binding)
-  end
 
   private
 
