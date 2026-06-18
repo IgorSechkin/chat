@@ -1,6 +1,5 @@
 require 'erb'
 require 'drb'
-require 'drb/drb'
 require 'open3'
 require 'json'
 require 'rack'
