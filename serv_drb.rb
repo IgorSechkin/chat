@@ -30,9 +30,6 @@ $connection = []
 $users_hash = {}
 
 class MyService < Tag
-  include ActionView::Helpers::TagHelper
-  include Nokogiri
-  
 
   attr_accessor :cookie, :params, :multipart_params, :clients, :messages, :page, :users_on
   def initialize()
