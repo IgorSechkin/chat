@@ -1,0 +1,22 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    nio4r (2.7.5)
+    puma (7.1.0)
+      nio4r (~> 2.0)
+    rack (3.2.4)
+    sqlite3 (2.8.1-x86_64-linux-gnu)
+
+PLATFORMS
+  x86_64-linux
+
+DEPENDENCIES
+  puma
+  rack
+  sqlite3
+
+RUBY VERSION
+   ruby 3.4.7p58
+
+BUNDLED WITH
+   2.6.9

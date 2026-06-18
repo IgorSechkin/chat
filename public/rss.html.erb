@@ -1,0 +1,61 @@
+<%= @cook %>
+<div class="container">
+<br><br>
+<%= 
+# select
+    urls = ["https://feedx.net/rss/ap.xml", 
+      "https://feeds.bbci.co.uk/news/rss.xml", 
+      "https://news.liga.net", "https://www.ruby-lang.org/en/feeds/news.rss", ""] 
+    Tag.type_tag("select", id: "mySelect") do 
+      urls.map(){|item| tag.option("#{item}", class: "classSelect", value: "#{item.downcase}")}.join
+    end
+%>
+</div>
+<div id="App" class="container"></div>
+
+<script>
+        // работа тєга select через javascript
+        const cont = document.getElementById("App");
+        const options = document.getElementsByClassName('classSelect');
+        
+
+        for (let option of options) {
+            //console.log(button.value);
+
+            option.addEventListener('click', (event) => {
+
+            //получаем даные из select
+            const data = {item: option.value};
+            
+            event.preventDefault(); // Предотвращаем стандартную отправку формы
+            async function fetchData() {
+                try {
+                    // 1. Делаем запрос
+                    const response = await fetch('/rss', { 
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' }, 
+                    body: JSON.stringify(data)});
+                    
+                    // 2. Проверяем, успешен ли ответ
+                    if (!response.ok) {
+                      throw new Error('Сетевая ошибка');
+                    }
+                    
+                    // 3. Извлекаем JSON (преобразуем тело ответа)
+                    const resp = await response.text();
+                    
+                    // 4. Операции над данными
+                    cont.innerHTML = resp;
+            
+                  } catch (error) {
+                    console.error('Ошибка:', error);
+                  }
+              }
+               
+               fetchData();   
+
+            });
+
+        }
+  
+</script> 

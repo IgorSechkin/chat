@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title></title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+	<link rel="canonical" href="https://getbootstrap.com/docs/4.5/examples/blog/">
+	<link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/cheatsheet/">
+
+
+	<style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+
+      <%# body {
+			  font-size: 2vw; /* Размер шрифта будет равен 2% от ширины экрана */
+			} %>
+    </style>
+
+
+</head>
+<body style="background-color: lightblue;">
+	<div id="wrapper" >
+	<div class="container">
+
+	<nav class="navbar navbar-expand-sm bg-dark navbar-dark justify-content-end"  style="top: 2vh;">
+
+		<ul class="navbar-nav ms-auto menu">
+			<li class="nav-item" >
+				<a class="nav-link" href="rss_link">RSS</a> |
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" href="form_login">Вход</a> |
+			</li>
+			<li class="nav-item" hidden>
+				<a class="nav-link" href="chat">Chat</a> |
+			</li>
+		</ul>
+
+	</nav>
+	</div>
+	<div>
+				<%= yield %>
+	</div>
+	</div>
+</body>
+</html>

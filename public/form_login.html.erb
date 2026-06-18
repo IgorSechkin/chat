@@ -1,0 +1,122 @@
+    <style>
+      #file-email {
+        position: relative;
+        display: inline-block;
+      }
+
+      #file-password {
+        position: relative;
+        display: inline-block;
+      }
+
+      #file-info {
+        position: relative;
+        display: inline-block;
+      }
+
+      .button-drop-file {
+        position: absolute;
+        right: 1px;
+        top: 1px;
+        border: none;
+      }
+    </style>
+
+
+<br><br>
+  <div class="container">
+    <form id="registerForm" name="registerForm" method="post" action="/session">
+      <div class="form-check-inline" id="file-email" >
+        <input type="email" class="inputForm form-control" id="useremail" name="email" placeholder="Email" style="border-radius: 30px; box-shadow: 10px 4px 10px 3px #888; width: 400px;"required ><div id="useremailErrors" class="alert" style="width: 350px;"></div>
+      </div>
+      <br><br>
+      <div class="form-check-inline" id="file-info">
+        <input type="password" class="inputForm form-control" id="pwd" name="password" placeholder="Пароль" maxlength="20" minlength="3" style="border-radius: 30px; box-shadow: 10px 4px 10px 3px #888; width: 400px;" required>
+        <button type="button" class="btn button-drop-file" id="myButton" style="border-radius: 0px 15px 15px 0px;">Show</button>
+        <div id="userpwdErrors" class="alert" style="width: 350px;"></div>
+      </div>
+      <br><br>
+      <div><br>
+        <input type="submit" id="submit" name="submit" style="border-radius: 15px; width: 400px; height: 40px;" value="Вход">
+      </div>
+    </form>
+    <p>пароль - 6 первых букв email</p>
+    <div id="users">
+      <table>
+        <% @users.each do |user| %>
+        <tr>
+          <td><%= " #{user["email"]}  |"%></td> 
+          <td><%= user["name"]%></td>
+        </tr>
+        <% end %>
+      </table>
+      
+    </div>
+  </div>
+
+    <script>
+    // показать спрятать значение в инпуте password
+    const inp = document.getElementById("pwd");
+    const button = document.getElementById('myButton');
+
+    // 2. Определяем функцию-обработчик
+    function handleClick() {
+      if (inp.getAttribute("type") === "password"){
+        inp.setAttribute("type", "text");
+        button.innerHTML = "Hide";
+      }
+      else if(inp.getAttribute("type") === "text"){
+        inp.setAttribute("type", "password"); 
+        button.innerHTML = "Show";
+      }
+      
+    }
+    // 3. Добавляем слушатель события 'click'
+    // При клике будет вызвана функция handleClick
+    button.addEventListener('click', handleClick);
+
+  </script>
+
+<script>
+  // валидация
+  const useremailErrors = document.getElementById("useremailErrors");
+  <%# const useremailField = document.registerForm.email; %>
+  const useremailField = document.getElementById("useremail");
+  useremailField.addEventListener("change", validateEmail);
+
+  const userpwdErrors = document.getElementById("userpwdErrors");
+  const userpasswordField = document.registerForm.password;
+  userpasswordField.addEventListener("change", validatePwd);
+
+
+
+  function validateEmail(e){
+
+      // проверяем на валидацию
+      if(!useremailField.validity.valid){
+          useremailErrors.textContent = useremailField.validationMessage;
+          useremailErrors.classList.add('alert-warning'); 
+          useremailErrors.style.display = "block";
+      }
+      else{
+          useremailErrors.textContent = "";
+          useremailErrors.style.display = "none";
+          e.preventDefault(); // предупреждаем отправку форму и перезагрузку страницы
+      }
+  }
+
+  function validatePwd(e){
+
+      // проверяем на валидацию
+      if(!userpasswordField.validity.valid){
+          userpwdErrors.textContent = userpasswordField.validationMessage;
+          userpwdErrors.classList.add('alert-warning'); 
+          userpwdErrors.style.display = "block";
+      }
+      else{
+          userpwdErrors.textContent = "";
+          userpwdErrors.style.display = "none";
+          e.preventDefault(); // предупреждаем отправку форму и перезагрузку страницы
+      }
+  }
+</script>

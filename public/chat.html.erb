@@ -1,0 +1,94 @@
+    <%= @cookie %>
+    <br><br>
+    <div class="container">
+    <h2>Ruby Мессенджер</h2>
+   
+    <br><br><br>
+    <div class="container"> 
+      <div id="status"></div>
+      <a href="/logout">Log out</a>
+      <div class="row">
+        <div class="col-sm-4" id="users">
+          
+        </div>
+        <div class="col-sm-8 ">
+          <div id="messages" style="border:1px solid #ccc; height:400px; overflow-y:scroll; margin-bottom:10px; padding:10px;"></div>
+          <input type="text" id="msgInput" placeholder="Введите сообщение...">
+          <button onclick="sendMsg()">Отправить</button>   
+        </div>
+      </div>
+    </div>
+    
+        <script>
+          // Подключение к SSE. Каждый браузер создаст свой независимый поток
+          const evtSource = new EventSource('/stream');
+          //===================потери соединения===============================================
+          //1.отслеживание потери соединения или разрыва
+          evtSource.onerror = function(event){
+            if(evtSource.readyState === evtSource.CLOSED){
+              console.log('соединение было окончательно закрыто');
+            } else if(evtSource.readyState === evtSource.CONNECTING){
+              console.log('связь потеряна происходит автомотическое переподключение')
+            }
+          };
+
+          //2.Отслеживания явного закрытия соединения со стороны сервера
+          evtSource.addEventListener('close', function(event){
+            console.log('сервер сообщил о завершении потока');
+            evtSource.close();//останавливаем переподключение
+          });
+
+          //3. отслеживание закрытия клиентом вручную
+          function disconnectSSE(){
+            evtSource.close();
+            console.log('клиент принудительно разорвал соединение')
+          }
+          
+//=====================================================================================
+          evtSource.onmessage = function(event) {
+            
+            
+            const data = JSON.parse(event.data);
+            if(Array.isArray(data)){
+              const usersDiv = document.getElementById('users');
+              usersDiv.replaceChildren();
+              for (let item of data) {
+                if(item.active === true){usersDiv.innerHTML += `<p>${item.name}<span>'🟢 в чате'</span></p>`}else{usersDiv.innerHTML += `<p>${item.name}<span>'🔴 вышел'</span></p>`;}
+                <%# usersDiv.innerHTML += `<p>${item.name}</p>`; %>
+              }
+              usersDiv.scrollTop = usersDiv.scrollHeight;
+
+            };
+          };
+        </script>
+
+        <script>
+          // Подключение к SSE. Каждый браузер создаст свой независимый поток
+          const evtSource1 = new EventSource('/chat/stream');
+          //const evtSource1 = new EventSource('/message');
+          
+//=====================================================================================
+          evtSource1.onmessage = function(event) {
+            <%# console.log(JSON.parse(event.data)); %>
+            const item = JSON.parse(event.data);
+            const msgDiv = document.getElementById('messages');
+            <%# const item = event.data; %>
+            msgDiv.innerHTML += `<div class="container" style="background-color: lightyellow; border: solid; border-radius: 25px; margin-top: 20px; padding-left: 20px;"><b>[${item.time}]:</b><p>${item.email}</p><p>${item.text}</p></div>`;
+            msgDiv.scrollTop = msgDiv.scrollHeight;
+          };
+
+          // Отправка через fetch
+          function sendMsg() {
+
+            const input = document.getElementById('msgInput');
+            if(!input.value.trim()) return;
+
+            fetch('chat/send', {
+            //fetch('message', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ text: input.value })
+            });
+            input.value = '';
+          }
+        </script>
